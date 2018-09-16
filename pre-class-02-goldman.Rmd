@@ -96,7 +96,7 @@ means<-c(mean(exp.draws.1), mean(exp.draws.0.2), mean(exp.draws.5), mean(exp.dra
 rates<-c(1, 0.2, 5, 7.3, 10)
 plotmeans<-plot(means, rates )
 ```
-In this first plot, we can see that the mean of the distribution decreases as the rate increases. The plot follows an exponential distribution
+In this first plot, we can see that the mean of the distribution decreases as the rate increases. The plot follows an exponential distribution.
 
 ### Question 4b
 
@@ -105,7 +105,7 @@ StandardDevation<-c(sd(exp.draws.1), sd(exp.draws.0.2), sd(exp.draws.5), sd(exp.
 plotsd<-plot(StandardDevation, rates)
 
 ```
-The distribution of standard devtions plotted agains the rate looks similar to that of the plot of the means versus the rates. And similarly, as the rate increases, the standard devition decreases following an exponential distribution
+The distribution of standard deviations plotted agains the rate looks similar to that of the plot of the means versus the rates. And similarly, as the rate increases, the standard devition decreases following an exponential distribution
 
 ### Question 4c
 ```{r}
@@ -165,5 +165,5 @@ mean(c371)
 columnMeans<-colMeans(big.exp.draws.1.mat[], dims=1)
 hist(columnMeans)
 ```
-The histogram is normally distributed. Though the distribution that generated the means is exponential, after creating a matrix with 1,000 columns, comprising of 1,100 rows, the column means become normally distributed. 
+The histogram is normally distributed. Though the distribution that generated this final matrix follows an exponential distribution, after creating a matrix with 1,000 columns, comprising of 1,100 rows, the column means become normally distributed. 
 
