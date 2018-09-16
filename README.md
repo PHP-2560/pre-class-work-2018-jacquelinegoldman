@@ -10,5 +10,4 @@ Before you continue, Edit this document with:
 - Brown Name: Jacqueline
 - Brown E-mail: Jacqueline_goldman1@brown.edu
 
-git commit -m "Read Me File"
 
