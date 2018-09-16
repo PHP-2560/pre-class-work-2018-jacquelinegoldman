@@ -6,6 +6,9 @@ This folder will be where you complete your pre-class each week. The first time 
 Before you continue, Edit this document with:
 
 
-- Preferred Name: _________________________________
-- Brown Name: ___________________________
-- Brown E-mail: ______________________
+- Preferred Name: Jackie
+- Brown Name: Jacqueline
+- Brown E-mail: Jacqueline_goldman1@brown.edu
+
+git commit -m "Read Me File"
+
