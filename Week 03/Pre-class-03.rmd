@@ -1,7 +1,13 @@
 Pre-Class Problems
 Use dplyr functions to address the following questions:
-
+### Question 1
 How many unique countries are represented per continent?
+```{r}
+install.packages("gapminder")
+library(dplyr)
+library(gapminder)
+gapminder
+```
 Which European nation had the lowest GDP per capita in 1997?
 According to the data available, what was the average life expectancy across each continent in the 1980s?
 What 5 countries have the highest total GDP over all years combined?
