@@ -1,0 +1,13 @@
+Pre-Class Problems
+Use dplyr functions to address the following questions:
+
+How many unique countries are represented per continent?
+Which European nation had the lowest GDP per capita in 1997?
+According to the data available, what was the average life expectancy across each continent in the 1980s?
+What 5 countries have the highest total GDP over all years combined?
+What countries and years had life expectancies of at least 80 years? N.b. only output the columns of interest: country, life expectancy and year (in that order).
+What 10 countries have the strongest correlation (in either direction) between life expectancy and per capita GDP?
+Which combinations of continent (besides Asia) and year have the highest average population across all countries? N.b. your output should include all results sorted by highest average population. With what you already know, this one may stump you. See this Q&A for how to ungroup before arrangeing. This also behaves differently in more recent versions of dplyr.
+Which three countries have had the most consistent population estimates (i.e. lowest standard deviation) across the years of available data?
+Subset gm to only include observations from 1992 and store the results as gm1992. What kind of object is this?
+Which observations indicate that the population of a country has decreased from the previous year and the life expectancy has increased from the previous year? See the vignette on window functions.
