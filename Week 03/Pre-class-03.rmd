@@ -27,11 +27,12 @@ The country in Europe in 1997 with the lowest GDP per capita is Albania
 According to the data available, what was the average life expectancy across each continent in the 1980s?
 ```{r}
 gapminder %>%
-  filter()
+  filter(year>=1980 & year<=1989) %>%
   group_by(continent) %>%
   summarise(mean_life_exp=mean(lifeExp, na.rm=TRUE))
 
 ```
+The mean life expectancy throughout the 1980's is 52.5 years in Africa, 67.16 years in the Americas, 63.73 years in Asia, 73.22 years in Europe, and 74.81 years in Oceania.
 ### Question 4
 What 5 countries have the highest total GDP over all years combined?
 ```{r}
