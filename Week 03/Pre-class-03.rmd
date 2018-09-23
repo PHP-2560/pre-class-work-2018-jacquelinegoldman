@@ -25,8 +25,32 @@ The country in Europe in 1997 with the lowest GDP per capita is Albania
 
 ### Question 3
 According to the data available, what was the average life expectancy across each continent in the 1980s?
+```{r}
+gapminder %>%
+  filter()
+  group_by(continent) %>%
+  summarise(mean_life_exp=mean(lifeExp, na.rm=TRUE))
+
+```
+### Question 4
 What 5 countries have the highest total GDP over all years combined?
+```{r}
+gapminder %>%
+  group_by(country) %>%
+  summarise(total_gpb=sum(gdpPercap, na.rm=TRUE)) %>%
+  arrange(desc(total_gpb))
+
+```
+The 5 countries with the highest GDP per capital are Kuwait, Switzerland, Norway, the United States, and Canada.
+
+### Question 5
 What countries and years had life expectancies of at least 80 years? N.b. only output the columns of interest: country, life expectancy and year (in that order).
+``` {r}
+gapminder %>%
+  filter(lifeExp>=80) %>%
+  select (lifeExp, country, year)
+```
+
 What 10 countries have the strongest correlation (in either direction) between life expectancy and per capita GDP?
 Which combinations of continent (besides Asia) and year have the highest average population across all countries? N.b. your output should include all results sorted by highest average population. With what you already know, this one may stump you. See this Q&A for how to ungroup before arrangeing. This also behaves differently in more recent versions of dplyr.
 Which three countries have had the most consistent population estimates (i.e. lowest standard deviation) across the years of available data?
