@@ -50,9 +50,15 @@ gapminder %>%
   filter(lifeExp>=80) %>%
   select (lifeExp, country, year)
 ```
-
+### Question 6
 What 10 countries have the strongest correlation (in either direction) between life expectancy and per capita GDP?
+
+### Question 7
 Which combinations of continent (besides Asia) and year have the highest average population across all countries? N.b. your output should include all results sorted by highest average population. With what you already know, this one may stump you. See this Q&A for how to ungroup before arrangeing. This also behaves differently in more recent versions of dplyr.
+
+### Question 8
 Which three countries have had the most consistent population estimates (i.e. lowest standard deviation) across the years of available data?
+
+###Question 9
 Subset gm to only include observations from 1992 and store the results as gm1992. What kind of object is this?
 Which observations indicate that the population of a country has decreased from the previous year and the life expectancy has increased from the previous year? See the vignette on window functions.
