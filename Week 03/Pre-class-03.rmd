@@ -7,8 +7,23 @@ install.packages("gapminder")
 library(dplyr)
 library(gapminder)
 gapminder
+tbl_gpm<-tbl_df(gapminder)
+gapminder %>%
+  group_by(continent)%>%
+  summarise(n_distinct(country))
 ```
+There are 52 countries in Africa, 25 listed in the Americas, 33 in Asiam 30 in Europe and 2 in Oceania listed in the dataset.
+
+### Question 2
 Which European nation had the lowest GDP per capita in 1997?
+```{r}
+gapminder %>%
+  filter(continent=="Europe" & year=="1997") %>%
+  arrange(gdpPercap) 
+```
+The country in Europe in 1997 with the lowest GDP per capita is Albania
+
+### Question 3
 According to the data available, what was the average life expectancy across each continent in the 1980s?
 What 5 countries have the highest total GDP over all years combined?
 What countries and years had life expectancies of at least 80 years? N.b. only output the columns of interest: country, life expectancy and year (in that order).
