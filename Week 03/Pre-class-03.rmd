@@ -63,7 +63,15 @@ summarize(cor=cor(lifeExp, gdpPercap)) %>%
 The countries with the 10 highest correlations between life expectancy and gdp per capita are France, Austria, Belgium, Norwar, Oman, United Kingdom, Italy, Israel, Denmark and Australia.
 ### Question 7
 Which combinations of continent (besides Asia) and year have the highest average population across all countries? N.b. your output should include all results sorted by highest average population. With what you already know, this one may stump you. See this Q&A for how to ungroup before arrangeing. This also behaves differently in more recent versions of dplyr.
-
+```{r}
+gapminder %>%
+  group_by(continent, year) %>%
+  mutate(rank=row_number(pop)) %>%
+  filter(rank<=10) %>%
+  arrange(rank)%>%
+  ungroup() %>%
+  arrange(desc(pop))
+```
 ### Question 8
 Which three countries have had the most consistent population estimates (i.e. lowest standard deviation) across the years of available data?
 ```{r}
@@ -87,5 +95,10 @@ gm1992 is a data frame.
 ### Question 10
 Which observations indicate that the population of a country has decreased from the previous year and the life expectancy has increased from the previous year? See the vignette on window functions.
 ```{r}
-
+gapminder %>%
+  mutate(pop_delta=pop-lag(pop)) %>%
+  mutate(lifeExp_delt=lifeExp-lag(lifeExp)) %>%
+  filter(pop_delta <0, lifeExp_delt>0)
+           
 ```
+This code produces a table where the countries have a positive increase in life expectancy from the previous year and a decreased population from the year before. 
