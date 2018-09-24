@@ -56,13 +56,11 @@ What 10 countries have the strongest correlation (in either direction) between l
 ```{r}
 gapminder %>%
   group_by(country) %>%
-  cor.test(lifeExp, gdpPercap) %>%
-           arrange(desc(corr))
-  
-  
+summarize(cor=cor(lifeExp, gdpPercap)) %>%
+  arrange(desc(abs(cor)))
 
 ```
-
+The countries with the 10 highest correlations between life expectancy and gdp per capita are France, Austria, Belgium, Norwar, Oman, United Kingdom, Italy, Israel, Denmark and Australia.
 ### Question 7
 Which combinations of continent (besides Asia) and year have the highest average population across all countries? N.b. your output should include all results sorted by highest average population. With what you already know, this one may stump you. See this Q&A for how to ungroup before arrangeing. This also behaves differently in more recent versions of dplyr.
 
