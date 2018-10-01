@@ -21,27 +21,22 @@ for (i in 1:50) {
 A.  Using a loop, add all the integers between 0 and 1000.
 ```{r}
 #initiatize sum to 0;
-sum = 0;
+sum<-0;
 #now add
 for (i in 1:1000) {
-  sum = sum+i
-  if (i == 1000) {
-    print(sum)
-  }
-  i = i+1
+  sum<-sum + i
 }
-
+sum
 ```
 
 B. Now, add all the EVEN integers between 0 and 1000 (hint: use seq())
 ```{r}
-for (i in seq(from=1, to=1000, by=2)) {
-  sum = sum+i
-  if (i == 1000) {
-    print(sum)
-  }
-  i = i+1
+seq<-seq(2, 1000,2)
+sumb<-0
+for (i in seq){
+  sumb<-sumb + i
 }
+sumb
 
 ```
 
@@ -51,12 +46,16 @@ C. Now, repeat A and B WITHOUT using a loop.
 all <- seq(from=0, to=1000, by=1)
 #summing vector
 sum(all)
+#or using arthmatic
+1000*(1000+1)/2
 
 #Question 2B
 #making vector with even integers
 even <- seq(from=0, to=1000, by=2)
 #summing vector
 sum(even)
+#now using arithmatic
+1000*(1000+2)/4
 ```
 ### Question 3:
 
