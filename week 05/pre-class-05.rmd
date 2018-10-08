@@ -95,10 +95,48 @@ bmi     Body Mass Index
 
 ### Question 1: Standardize Function
 
-A. Create a function called standardize.me() that takes a numeric vector as an argument, and returns the standardized version of the vector. 
+A. Create a function called standardize.me() that takes a numeric vector as an argument, and returns the standardized version of the vector.
+```{r}
+standardize.me<-function (vec){
+ (vec-mean(vec)/sd(vec)) 
+}
+```
 B. Assign all the numeric columns of the original WCGS dataset to a new dataset called WCGS.new.
+```{r}
+WCGS.new<-wcgs
+
+for (i in 1:length(wcgs)) {
+  if (is.numeric(wcgs[,i])==TRUE){
+    WCGS.new[,i]<- wcgs[,i]
+  } else {
+    WCGS.new[,i]<-NA
+  }
+}
+
+```
 C. Using a loop and your new function, standardize all the variables WCGS.new dataset.
+```{r}
+for (i in 1:length(WCGS.new)){
+  WCGS.new[,i]<-standardize.me(WCGS.new[,i])
+}
+
+```
 D. What should the mean and standard deviation of all your new standardized variables be? Test your prediction by running a loop
+```{r}
+# The mean should equal 0 and the standard deviation should be 1
+meanWCGS<-vector()
+sdWCGS<-vector()
+
+
+for (i in 1:length(WCGS.new)){
+  meanWCGS[i]<-mean(WCGS.new[,i], na.rm=T)
+  sdWCGS[i]<-sd(WCGS.new[,i], na.rm=T)
+}
+print(meanWCGS)
+print(sdWCGS)
+
+#The mean is close to 0 and the standard deviation is 1
+```
 
 
 
@@ -106,5 +144,39 @@ D. What should the mean and standard deviation of all your new standardized vari
 ### Question 2: Looping to Calculate
 
 A. Using a loop, calculate the mean weight of the subjects separated by the type of CHD they have.
+```{r}
+#subsetting into types of chd
+noCHD<-subset(wcgs, typchd69=="no CHD")
+MISDCHD<-subset(wcgs, typchd69=="MI or SD")
+SilentCHD<-subset(wcgs, typchd69=="silent MI")
+angCHD<-subset(wcgs, typchd69=="angina")
+
+#creating lists of weight by CHD type
+weight<-list()
+weight$noCHD<-noCHD$weight
+weight$MISDCHD<-MISDCHD$weight
+weight$SilentCHD<-SilentCHD$weight
+weight$angCHD<-angCHD$weight
+
+#using look to find weigh
+for (i in 1:length(weight)){
+  mean[i]<-mean(weight[[i]])
+}
+print(mean)
+
+```
 B. Now do the same thing, but now don’t use a loop
+```{r}
+#using dplyer
+library(dplyr)
+wcgs %>%
+  group_by(typchd69)%>%
+  summarise(mean=mean(weight))
+
+#manually calculating weight using lists made in previous part
+mean(weight$noCHD)
+mean(weight$MISDCHD)
+mean(weight$SilentCHD)
+mean(weight$angCHD)
+```
 
