@@ -27,6 +27,8 @@ f3 <- function(x, y) { #this function repeates y once for each elemenet of x, I 
 
 2. Compare and contrast rnorm() and MASS::mvrnorm(). How could you make them more consistent?
 
+Rnorm samples from a normal, univariate distribution. MASS:mvrnorm samples from a normal, multivatiate distrbution. The functions take different argument.s rnorm takes n, mean, and sd, and MASS:mvrnorn takes n, my and sigma. To make them more consistent, I would give them the same arguments, which is easier said than done. The functions are internally consistent, in that while mean can be sampled in both a multivariate and univariate model, sd can only be applied in a univariate model. Either, the arguments should be mu and sd, or mean and sigma. 
+
 
 3. Use `lapply()` and an anonymous function to find the coefficient of variation (the standard deviation divided by the mean) for all columns in the mtcars dataset. 
 
