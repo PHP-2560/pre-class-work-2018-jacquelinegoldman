@@ -12,15 +12,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Read the source code for each of the following three functions, puzzle out what they do, and then brainstorm better names.
 
-```
-f1 <- function(string, prefix) {
-  substr(string, 1, nchar(prefix)) == prefix
+``` {r}
+f1 <- function(string, prefix) { #this function operates on a sting and tests whther each element of the character vector starts with the prefix listed in the code. It would retrn a true false. I would name it prefix_true_false
+  substr(string, 1, nchar(prefix)) == prefix #this line of code extracts the string, and truncates the string to 
 }
-f2 <- function(x) {
+f2 <- function(x) { #this function takes x, if the length of x is less than or equal to one, it retunrs a NULL anser, and if it is greater o equal to one, it removes the last element. I might name it remove_last
   if (length(x) <= 1) return(NULL)
   x[-length(x)]
 }
-f3 <- function(x, y) {
+f3 <- function(x, y) { #this function repeates y once for each elemenet of x, I might call it duplicate_second
   rep(y, length.out = length(x))
 }
 ```
