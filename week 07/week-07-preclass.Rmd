@@ -143,21 +143,28 @@ Note: you *must* stop playing if your player has gone bust. How will you handle 
 2. **Markov Chains**. Suppose you have a game where the probability of winning on your first hand is 48%; each time you win, that probability goes up by one percentage point for the next game (to a maximum of 100%, where it must stay), and each time you lose, it goes back down to 48%. Assume you cannot go bust and that the size of your wager is a constant $100.
     a. Is this a fair game? Simulate one hundred thousand sequential hands to determine the size of your return. Then repeat this simulation 99 more times to get a range of values to calculate the expectation.
 ```{r}
-markovchaingame<-function(nn, winprob=0.48, start=100){
-  output<-rep(NA, nn)
-  output[1]<- start
-  for (iteration in 2:nn){
-    output[iteration]<-output[iteration-1] + 2*rbinom(100, 100, 0.48+0.01*)
+totalgames<-rep(NA, 100)
+totalgames[1]<-100   
+
+markovchaingame<-function(totalgames, winprob, start=100){
+  for (turns in 1:totalgames){
+    if (totalgames[turns+1]>totalgames[turns]){
+      winprob= 0.01+winprob
+    }else{
+      winprob=0.48
+    }
+  }
+  ##if(nn==1){
+    ##winprob==0.48
+#  } else if ()
+ # output<-rep(NA, nn)
+  #output[1]<- start
+  #for (iteration in 2:nn){
+   # output[iteration]<-output[iteration-1] + 2*rbinom(100, 100, winprob))
   }
 }
 
 
-wager<-100
-totalgames<-rep(NA, 100)
-totalgames[1]<-100
-for (turns in 2:100){
-  totalhands[turns]<-rbinom(100, 100, 0.48+0.01*totalgames[turns-1])
-}
 
 ```
     b. Repeat this process but change the starting probability to a new value within 2% either way. Get the expected return after 100 repetitions. Keep exploring until you have a return value that is as fair as you can make it. Can you do this automatically?
