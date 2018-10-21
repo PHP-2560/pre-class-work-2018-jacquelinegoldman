@@ -66,10 +66,78 @@ probability1
 
 ```
     b. the probability that you have busted by the time you have placed your five hundredth bet by simulating the outcome directly. 
+```{r}
+x2<-length(durations)
+y2<-length(which(durations<=500))
+probability2<-y2/x2
+probability2
+```
     c. the mean time you go bust, given that you go bust within the first 5000 hands.
+```{r}
+busttime<-durations[which(durations<=5000)]
+meanbusttime<-mean(busttime)
+meanbusttime
+```
     d. the mean and variance of your bankroll after 100 hands (including busts).
+```{r}
+gamblersruinbust100<-function(bet, bankroll, probability){
+  turns=0
+  while(bet>0){
+    value=runif(1)
+    if (value <=probability){
+      bankroll= bet + bankroll
+      bet = (bet+bankroll)*0.1
+    } else{
+      bankroll= bankroll - bet
+      bet = bet
+    }
+    turns=turns + 1
+    if (turns == 100){break}
+    if (bankroll< bet){break}
+  }
+  time= turns
+  return(bankroll)
+}
+
+bankroll=numeric()
+iterations= 5000
+for (i in 1:iterations){
+  nextturn<- gamblersruinbust(100, 900, 0.5)
+  bankroll=c (bankroll, nextturn)
+}
+mean(bankroll)
+var(bankroll)
+```
     e. the mean and variance of your bankroll after 500 hands (including busts).
- 
+```{r}
+gamblersruinbust<-function(bet, bankroll, probability){
+  turns=0
+  while(bet>0){
+    value=runif(1)
+    if (value <=probability){
+      bankroll= bet + bankroll
+      bet = (bet+bankroll)*0.1
+    } else{
+      bankroll= bankroll - bet
+      bet = bet
+    }
+    turns=turns + 1
+    if (turns == 500){break}
+    if (bankroll< bet){break}
+  }
+  time= turns
+  return(bankroll)
+}
+
+bankroll=numeric()
+iterations= 5000
+for (i in 1:iterations){
+  nextturn<- gamblersruinbust(100, 900, 0.5)
+  bankroll=c (bankroll, nextturn)
+}
+mean(bankroll)
+var(bankroll)
+```
 Note: you *must* stop playing if your player has gone bust. How will you handle this in the `for` loop?
 
 2. **Markov Chains**. Suppose you have a game where the probability of winning on your first hand is 48%; each time you win, that probability goes up by one percentage point for the next game (to a maximum of 100%, where it must stay), and each time you lose, it goes back down to 48%. Assume you cannot go bust and that the size of your wager is a constant $100.
