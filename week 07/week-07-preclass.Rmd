@@ -147,6 +147,7 @@ totalgames<-rep(NA, 100)
 totalgames[1]<-100   
 
 markovchaingame<-function(totalgames, winprob, start=100){
+  totalgames[1]<-
   for (turns in 1:totalgames){
     if (totalgames[turns+1]>totalgames[turns]){
       winprob= 0.01+winprob
