@@ -219,7 +219,7 @@ markov_func<-function(cash, bet, prob){
     break
   }
 }
-
+value<-markov_func(1000, 100, .48)
 replicate(10, markov_func(1000, 100, .48))
 
 ```
@@ -241,5 +241,13 @@ The steps of this process are:
   e. The upper bound of a 95% CI will be the 0.975 percentile
 
 Make a function called `boot_ci` which calculates the 95% confidence interval in this manner. 
+bootsample<-0
+for(i in 1:1000){
+sample
+bootsample[i]<-estimator
+}
+
+
+
 
 5. For problems 3b and 3c, you calculated a mean value. Because you saved these final results in a vector, use the bootstrap to estimate the variance of the return in each case for your final answer. Once you have these results, which game has the smaller variance in returns?
