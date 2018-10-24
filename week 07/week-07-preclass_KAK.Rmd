@@ -178,7 +178,7 @@ cashvector[i] <- cash
   #hand counter
   hand<-0
   probability<-prob
-  while(bet>0){
+  while(cashvector[i-1]>bet){
     roll<-runif(1)
     if(roll<prob)
     {
@@ -205,7 +205,6 @@ cashvector[i] <- cash
     a. Is this a fair game? Simulate one hundred thousand sequential hands to determine the size of your return. Then repeat this simulation 99 more times to get a range of values to calculate the expectation.
 ```{r}
 markov_func(cash=1000,bet=100,prob=0.48)
-
 msim <- rep(100000,markov_func(cash=1000,bet=100,prob=0.48))
 range(msim)
 ```
