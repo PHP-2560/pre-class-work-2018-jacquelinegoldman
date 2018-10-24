@@ -178,7 +178,7 @@ cashvector[i] <- cash
   #hand counter
   hand<-0
   probability<-prob
-  while(cashvector[i-1]>bet){
+  while(hand<100000){
     roll<-runif(1)
     if(roll<prob)
     {
@@ -190,16 +190,8 @@ cashvector[i] <- cash
       probability<-prob
     }
   }
-  hand<-hand+1
-  if(hand==100){
-    return(cashvector)
-    break
   }
-  if(cashvector[i-1]<bet){
-    return(cashvector)
-    break
-  }
-  }
+     return(cashvector)
 }
 ```
     a. Is this a fair game? Simulate one hundred thousand sequential hands to determine the size of your return. Then repeat this simulation 99 more times to get a range of values to calculate the expectation.
