@@ -101,6 +101,7 @@ gamble_sim2<-function(cash, bet, prob){ #intiating hand at 0
     }
     hand<-hand+1 #this is counting the hands
     if(hand[i]==100){
+      for( i in 1:100){
       (return(cashvector[1:i]) #if you had 5,000 hands, break
       break} 
     }

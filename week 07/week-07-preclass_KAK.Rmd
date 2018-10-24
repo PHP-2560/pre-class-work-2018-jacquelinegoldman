@@ -94,38 +94,26 @@ mean time to bust is 1013.4 hands
     d. the mean and variance of your bankroll after 100 hands (including busts).
 ```{r}
 gamble_sim2<-function(cash, bet, prob){ #intiating hand at 0
-  hand<-0
-  cashvector<-rep(NA, N)
+  cashvector<-rep(NA, 100)
   #demonstrates that you need to have cash to run
-  while(cash>0){ #when you have money, you get a result from the random uniform
+  cashvector[1] <- cash
+  for (i in 2:100) {
+      #check if we are out of cash
+      if (cashvector[i-1]==0) {
+      return(cashvector)
+      break }
     roll<-runif(1)
     if(roll<=prob){ #if you lose, you get back your cash minus the best
-      cash<-cash-bet
+      cashvector[i]<-cashvector[i-1]-bet
     } else { #other wise, you have the cash + the bet
-      cash<-cash+bet
+      cashvector[i]<-cashvector[i-1]+bet
     }
-    hand<-hand+1 #this is counting the hands
-    if(hand[i]==100){
-      (return(cashvector[1:i]) #if you had 5,000 hands, break
-      break} 
-    }
-    #breaks when insufficient cash to make bet
-    if(cash<bet){
-      break
-    }
-
-  } 
-  return(hand)
+  }
+  return(cashvector)
 }
 
-bankroll=numeric()
-hand=5000
-for (i in 1:hand){
-  nextturn<- gamble_sim2(1000, 100, 0.5)
-  bankroll=c (bankroll, nextturn)
-}
-mean(bankroll)
-var(bankroll)
+mean(cashvector)
+var(cashvector)
 ```
     e. the mean and variance of your bankroll after 500 hands (including busts).
 ```{r}
