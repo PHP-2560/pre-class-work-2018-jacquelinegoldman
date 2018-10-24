@@ -90,6 +90,7 @@ print(mean(timetobust))
 ```{r}
 gamble_sim2<-function(cash, bet, prob){ #intiating hand at 0
   hand<-0
+  cashvector<-rep(NA, N)
   #demonstrates that you need to have cash to run
   while(cash>0){ #when you have money, you get a result from the random uniform
     roll<-runif(1)
@@ -99,21 +100,27 @@ gamble_sim2<-function(cash, bet, prob){ #intiating hand at 0
       cash<-cash+bet
     }
     hand<-hand+1 #this is counting the hands
-    if(hand==5000){ #if you had 5,000 hands, break
-      break
+    if(hand[i]==100){
+      (return(cashvector[1:i]) #if you had 5,000 hands, break
+      break} 
     }
     #breaks when insufficient cash to make bet
     if(cash<bet){
       break
     }
-} 
-  return(cash)
-}  
 
+  } 
+  return(hand)
+}
 
-mean(cash)
-var(cash)
-
+bankroll=numeric()
+hand=5000
+for (i in 1:hand){
+  nextturn<- gamble_sim2(1000, 100, 0.5)
+  bankroll=c (bankroll, nextturn)
+}
+mean(bankroll)
+var(bankroll)
 ```
     e. the mean and variance of your bankroll after 500 hands (including busts).
  
