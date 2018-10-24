@@ -90,6 +90,8 @@ print(mean(timetobust)
 ```{r}
 gamble_sim<-function(cash, bet, prob){ #intiating hand at 0
   hand<-0
+  rollvec<-0
+for(i in 1:100){
   #demonstrates that you need to have cash to run
   while(cash>0){ #when you have money, you get a result from the random uniform
     roll<-runif(1)
@@ -98,8 +100,10 @@ gamble_sim<-function(cash, bet, prob){ #intiating hand at 0
     } else { #other wise, you have the cash + the bet
       cash<-cash+bet
     }
-    hand<-hand+1 #this is counting the hands
-    if(hand==5000){ #if you had 5,000 hands, break
+    hand<-hand+1 
+    rollvec[i]<-cash
+    #this is counting the hands
+    if(hand==100){ #if you had 100 hands, break
       break
     }
     #breaks when insufficient cash to make bet
@@ -110,11 +114,13 @@ gamble_sim<-function(cash, bet, prob){ #intiating hand at 0
   } 
   return(hand)
 }
+}
 
+#jackie's code
 bankroll=numeric()
-hand= 5000
+hand= 100
 for (i in 1:hand){
-  nextturn<- gamble_sim(100, 900, 0.5)
+  nextturn<- gamble_sim(1000, 100, 0.5)
   bankroll=c (bankroll, nextturn)
 }
 mean(bankroll)
