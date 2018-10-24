@@ -88,33 +88,29 @@ print(mean(timetobust)
 ```
     d. the mean and variance of your bankroll after 100 hands (including busts).
 ```{r}
-gamble_sim<-function(cash, bet, prob){ #intiating hand at 0
-  hand<-0
-  #demonstrates that you need to have cash to run
-  while(cash>0){ #when you have money, you get a result from the random uniform
-    roll<-runif(1)
-    if(roll<=prob){ #if you lose, you get back your cash minus the best
-      cash<-cash-bet
-    } else { #other wise, you have the cash + the bet
-      cash<-cash+bet
+gamblersruinbust100<-function(bet, bankroll, probability){
+  turns=0
+  while(bet>0){
+    value=runif(1)
+    if (value <=probability){
+      bankroll= bet + bankroll
+      bet = (bet+bankroll)*0.1
+    } else{
+      bankroll= bankroll - bet
+      bet = bet
     }
-    hand<-hand+1 #this is counting the hands
-    if(hand==5000){ #if you had 5,000 hands, break
-      break
-    }
-    #breaks when insufficient cash to make bet
-    if(cash<bet){
-      break
-    }
-
-  } 
-  return(hand)
+    turns=turns + 1
+    if (turns == 100){break}
+    if (bankroll< bet){break}
+  }
+  time= turns
+  return(bankroll)
 }
 
 bankroll=numeric()
-hand= 5000
-for (i in 1:hand){
-  nextturn<- gamble_sim(100, 900, 0.5)
+iterations= 5000
+for (i in 1:iterations){
+  nextturn<- gamblersruinbust(100, 900, 0.5)
   bankroll=c (bankroll, nextturn)
 }
 mean(bankroll)
