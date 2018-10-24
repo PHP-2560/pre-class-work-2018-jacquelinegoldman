@@ -188,6 +188,7 @@ cashvector[i] <- cash
       cashvector[i]<-cashvector[i-1]-bet
       #reset to initial
       probability<-prob
+      hand = hand +1
     }
   }
   }
