@@ -97,23 +97,19 @@ gamble_sim2<-function(cash, bet, prob){ #intiating hand at 0
   hand<-0
   cashvector<-rep(NA, N)
   #demonstrates that you need to have cash to run
-  while(cash>0){ #when you have money, you get a result from the random uniform
+  cashvector[1] <- cash
+  for (i in 2:100) {
+  while(cashvector[i-1]>0){ #when you have money, you get a result from the random uniform
     roll<-runif(1)
     if(roll<=prob){ #if you lose, you get back your cash minus the best
-      cash<-cash-bet
+      cashvector[i]<-cashvector[i-1]-bet
     } else { #other wise, you have the cash + the bet
-      cash<-cash+bet
+      cashvector[i]<-cashvector[i-1]+bet
     }
     hand<-hand+1 #this is counting the hands
     if(hand[i]==100){
-      (return(cashvector[1:i]) #if you had 5,000 hands, break
-      break} 
-    }
-    #breaks when insufficient cash to make bet
-    if(cash<bet){
-      break
-    }
-
+      (return(cashvector)) #if you had 5,000 hands, break
+      break}
   } 
   return(hand)
 }
@@ -122,7 +118,7 @@ bankroll=numeric()
 hand=5000
 for (i in 1:hand){
   nextturn<- gamble_sim2(1000, 100, 0.5)
-  bankroll=c (bankroll, nextturn)
+  bankroll=c(bankroll, nextturn)
 }
 mean(bankroll)
 var(bankroll)
