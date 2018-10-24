@@ -90,7 +90,7 @@ print(mean(timetobust)
 ```{r}
 gamble_sim<-function(cash, bet, prob){ #intiating hand at 0
   hand<-0
-  rollvec<-0
+  cashvec<-0
 for(i in 1:100){
   #demonstrates that you need to have cash to run
   while(cash>0){ #when you have money, you get a result from the random uniform
@@ -101,18 +101,20 @@ for(i in 1:100){
       cash<-cash+bet
     }
     hand<-hand+1 
-    rollvec[i]<-cash
     #this is counting the hands
-    if(hand==100){ #if you had 100 hands, break
+    if(hand==50000){ #if you had 100 hands, break
+      cashvec[i]<-cash
       break
     }
     #breaks when insufficient cash to make bet
     if(cash<bet){
+      cashvec[i]<-cash
       break
     }
 
   } 
   return(hand)
+  return(cashvec)
 }
 }
 
@@ -128,6 +130,17 @@ var(bankroll)
 
 ```
     e. the mean and variance of your bankroll after 500 hands (including busts).
+```{r}
+bankroll=numeric()
+hand= 500
+for (i in 1:hand){
+  nextturn<- gamble_sim(1000, 100, 0.5)
+  bankroll=c (bankroll, nextturn)
+}
+mean(bankroll)
+var(bankroll)
+
+```
  
 Note: you *must* stop playing if your player has gone bust. How will you handle this in the `for` loop?
 
