@@ -413,7 +413,7 @@ The steps of this process are:
   }
     return(sort(apply(data_sample,1, FUN)))
   }  
-
+#part B
 test<-c(1:6)
 boostrapfun(test, 100, FUN=mean)
 ```
