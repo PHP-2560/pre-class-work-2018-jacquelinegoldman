@@ -308,44 +308,6 @@ var(bankroll)
 3. **Markov Chains**. Suppose you have a game where the probability of winning on your first hand is 48%; each time you win, that probability goes up by one percentage point for the next game (to a maximum of 100%, where it must stay), and each time you lose, it goes back down to 48%. Assume you cannot go bust and that the size of your wager is a constant $100.
 
     a. Is this a fair game? Simulate one hundred thousand sequential hands to determine the size of your return. Then repeat this simulation 99 more times to get a range of values to calculate the expectation.
-```{r}
-markov_func<-function(cash, bet, prob){
-cashvector<-rep(NA, 100)
-for (i in 2:100) {
-cashvector[i] <- cash
-  #hand counter
-  hand<-0
-  probability<-prob
-  while(hand<100000){
-    roll<-runif(1)
-    if(roll<prob)
-    {
-      cashvector[i]<-cashvector[i-1]+bet
-      probability<-probability+.01
-    } else{
-      cashvector[i]<-cashvector[i-1]-bet
-      #reset to initial
-      probability<-prob
-      hand= hand + 1
-    }
-  }
-  hand<-hand+1
-  if(hand==100){
-    return(cashvector)
-    break
-  }
-  if(cashvector[i-1]<bet){
-    return(cashvector)
-    break
-  }
-  }
-}
-
-markov_func(cash=1000,bet=100,prob=0.48)
-msim <- rep(100, markov_func(cash=1000,bet=100,prob=0.48))
-range(msim)
-```
-
 
 ```{r}
 markov_func=function(bet,bankroll,p)
@@ -370,8 +332,8 @@ markov_func=function(bet,bankroll,p)
 }
 
 size = numeric()
-s = 100
-for(i in 1:s)
+turns = 100
+for(i in 1:turns)
 {
   nextb = markov_func(100,900,0.48)
   size = c(size,nextb)
@@ -382,10 +344,10 @@ mean(size)
     ```{r}
 set.seed(1)
 proportion=numeric()
-for (j in 1:20){
+for (i in 1:20){
   size=numeric()
-  s = 100
-for(i in 1:s)
+  turns = 100
+for(i in 1:turns)
 {
   nextb = markov_func(100,900,0.46+0.002*j)
   size = c(size,nextb)
@@ -401,7 +363,7 @@ proportion
 set.seed(1)
 markov1=function(bet,bankroll,p,increment)
 {
-  k=0
+  hand=0
   prob<-p
   while(bet>0) {
     ProbVal=runif(1)
@@ -413,20 +375,20 @@ markov1=function(bet,bankroll,p,increment)
       bankroll = bankroll-bet
       p = prob
     }
-    k=k+1
-    if(k==100000){break}
+    hand=hand+1
+    if(hand==100000){break}
     if(bankroll < bet){break}
   }
   return(bankroll)
 }
 
 proportion = numeric()
-for (z in 1:20){
+for (i in 1:20){
 size=numeric()
-s = 100
-for(i in 1:s)
+hands = 100
+for(j in 1:hands)
 {
-  nextb = markov1(100,900,0.48,0.002*z)
+  nextb = markov1(100,900,0.48,0.002*i)
   size = c(size,nextb)
 }
 nextproportion=length(which(size==0))/100
