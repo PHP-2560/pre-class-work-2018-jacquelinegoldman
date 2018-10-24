@@ -202,7 +202,7 @@ markov_func<-function(cash, bet, prob){
   #hand counter
   hand<-0
   probability<-prob
-  while(bet>0){
+  while(hand<=100000){
     roll<-runif(1)
     if(roll<probability)
     {
@@ -216,9 +216,6 @@ markov_func<-function(cash, bet, prob){
   }
   hand<-hand+1
   if(hand==100000){
-    break
-  }
-  if(cash<bet){
     break
   }
 }
