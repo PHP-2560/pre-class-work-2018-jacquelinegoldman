@@ -178,7 +178,7 @@ cashvector[i] <- cash
   #hand counter
   hand<-0
   probability<-prob
-  while(bet>0){
+  while(cashvector[i-1]>bet){
     roll<-runif(1)
     if(roll<prob)
     {
