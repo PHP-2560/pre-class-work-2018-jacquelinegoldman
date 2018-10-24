@@ -309,22 +309,61 @@ var(bankroll)
 
     a. Is this a fair game? Simulate one hundred thousand sequential hands to determine the size of your return. Then repeat this simulation 99 more times to get a range of values to calculate the expectation.
 ```{r}
-MC=function(bet,bankroll,p)
+markov_func<-function(cash, bet, prob){
+cashvector<-rep(NA, 100)
+for (i in 2:100) {
+cashvector[i] <- cash
+  #hand counter
+  hand<-0
+  probability<-prob
+  while(hand<100000){
+    roll<-runif(1)
+    if(roll<prob)
+    {
+      cashvector[i]<-cashvector[i-1]+bet
+      probability<-probability+.01
+    } else{
+      cashvector[i]<-cashvector[i-1]-bet
+      #reset to initial
+      probability<-prob
+      hand= hand + 1
+    }
+  }
+  hand<-hand+1
+  if(hand==100){
+    return(cashvector)
+    break
+  }
+  if(cashvector[i-1]<bet){
+    return(cashvector)
+    break
+  }
+  }
+}
+
+markov_func(cash=1000,bet=100,prob=0.48)
+msim <- rep(100, markov_func(cash=1000,bet=100,prob=0.48))
+range(msim)
+```
+
+
+```{r}
+markov_func=function(bet,bankroll,p)
 {
-  k=0
+  hand=0
   prob<-p
   while(bet>0) {
     ProbVal=runif(1)
     if(ProbVal <= p)
     {
-      bankroll = bankroll +bet
+      bankroll <- bankroll +bet
       p = p+0.01
     }else{
-      bankroll = bankroll-bet
+      bankroll <- bankroll-bet
       p = prob
     }
-    k=k+1
-    if(k==100000){break}
+    hand=hand+1
+    if(hand==100000){break}
     if(bankroll < bet){break}
   }
   return(bankroll)
@@ -334,7 +373,7 @@ size = numeric()
 s = 100
 for(i in 1:s)
 {
-  nextb = MC(100,900,0.48)
+  nextb = markov_func(100,900,0.48)
   size = c(size,nextb)
 }
 mean(size)
@@ -348,7 +387,7 @@ for (j in 1:20){
   s = 100
 for(i in 1:s)
 {
-  nextb = MC(100,900,0.46+0.002*j)
+  nextb = markov_func(100,900,0.46+0.002*j)
   size = c(size,nextb)
 }
   nextproportion=length(which(size==0))/100
@@ -360,7 +399,7 @@ proportion
     c. Repeat again, keeping the initial probability at 48%, but this time change the probability increment to a value different from 1%. Get the expected return after 100 repetitions. Keep changing this value until you have a return value that is as fair as you can make it. 
 ```{r}
 set.seed(1)
-MC1=function(bet,bankroll,p,increment)
+markov1=function(bet,bankroll,p,increment)
 {
   k=0
   prob<-p
@@ -387,7 +426,7 @@ size=numeric()
 s = 100
 for(i in 1:s)
 {
-  nextb = MC1(100,900,0.48,0.002*z)
+  nextb = markov1(100,900,0.48,0.002*z)
   size = c(size,nextb)
 }
 nextproportion=length(which(size==0))/100
