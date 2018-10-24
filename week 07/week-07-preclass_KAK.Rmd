@@ -1,0 +1,194 @@
+---
+title: "Simulations Pre-Class Project"
+date: "Due March 13, 2017 at 5:00pm"
+output:
+  html_document
+
+
+---
+
+<style type="text/css">
+.table {
+
+    width: 80%;
+    margin-left:10%; 
+    margin-right:10%;
+}
+</style>
+```{r,setup, echo=FALSE, cache=TRUE}
+## numbers >= 10^5 will be denoted in scientific notation,
+## and rounded to 2 digits
+options(scipen = 3, digits = 3)
+```
+
+
+
+
+#Project Goals:
+
+
+With this project we will simulate a famoues probability problem. This will not require knowledge of probability or statistics but only the logic to follow the steps in order to simulate this problem. This is one way to solve problems by using the computer. 
+
+ 1. **Gambler's Ruin**: Suppose you have a bankroll of $1000 and make bets of $100 on a fair game. By simulating the outcome directly for at most 5000 iterations of the game (or hands), estimate:
+    a. the probability that you have "busted" (lost all your money) by the time you have placed your one hundredth bet. 
+```{r}
+set.seed(1)
+#need a gamble function
+
+gamble_sim<-function(cash, bet, prob){
+  hand<-0
+  #demonstrates that you need to have cash to run
+  while(cash>0){
+    winning<-runif(1)
+    if(winning<=prob){
+      cash<-cash+bet
+    } else {
+      cash<-cash-bet
+    }
+    hand<-hand+1
+    if(hand==5000){
+      break
+    }
+    #breaks when insufficient cash to make bet
+    if(cash<bet){
+      break
+    }
+
+  } 
+  return(hand)
+}
+#then do a set of hands; not really sure what fair game means but gonna assume it's 50% chance  
+hands<-5000
+iter<-0
+for(i in 1:hands){
+  outcomevec<-gamble_sim(1000, 100, .5)
+  iter<-c(iter, outcomevec)
+}
+```
+
+```{r}
+trials<-length(iter)
+success<-length(which(iter<100))
+probability<-success/trials
+print(probability)
+```
+Probability is .324
+
+```
+    b. the probability that you have busted by the time you have placed your five hundredth bet by simulating the outcome directly. 
+```{r}
+trials<-length(iter)
+success<-length(which(iter<500))
+probability<-success/trials
+print(probability)
+```
+probability is .661
+
+    c. the mean time you go bust, given that you go bust within the first 5000 hands.
+```{r}
+timetobust<-iter[which(iter<=5000)]
+print(mean(timetobust))
+```
+mean time to bust is 1013.4 hands
+
+    d. the mean and variance of your bankroll after 100 hands (including busts).
+```{r}
+gamble_sim<-function(cash, bet, prob){
+  hand<-0
+  #demonstrates that you need to have cash to run
+  while(cash>0){
+    winning<-runif(1)
+    if(winning<=prob){
+      cash<-cash+bet
+    } else {
+      cash<-cash-bet
+    }
+    hand<-hand+1
+    if(hand==5000){
+      break
+    }
+    #breaks when insufficient cash to make bet
+    if(cash<bet){
+      break
+    }
+
+  } 
+  return(hand)
+}
+
+hands<-100
+iter<-0
+for(i in 1:hands){
+  outcomevec<-gamble_sim(1000, 100, .5)
+  iter<-c(iter, outcomevec)
+}
+mean(bankroll)
+var(bankroll)
+```
+    e. the mean and variance of your bankroll after 500 hands (including busts).
+```{r}
+gamblersruinbust<-function(bet, bankroll, probability){
+  turns=0
+  while(bet>0){
+    value=runif(1)
+    if (value <=probability){
+      bankroll= bet + bankroll
+      bet = (bet+bankroll)*0.1
+    } else{
+      bankroll= bankroll - bet
+      bet = bet
+    }
+    turns=turns + 1
+    if (turns == 500){break}
+    if (bankroll< bet){break}
+  }
+  time= turns
+  return(bankroll)
+}
+
+bankroll=numeric()
+iterations= 5000
+for (i in 1:iterations){
+  nextturn<- gamblersruinbust(100, 900, 0.5)
+  bankroll=c(bankroll, nextturn)
+}
+mean(bankroll)
+var(bankroll)
+```
+Note: you *must* stop playing if your player has gone bust. How will you handle this in the `for` loop?
+
+2. **Markov Chains**. Suppose you have a game where the probability of winning on your first hand is 48%; each time you win, that probability goes up by one percentage point for the next game (to a maximum of 100%, where it must stay), and each time you lose, it goes back down to 48%. Assume you cannot go bust and that the size of your wager is a constant $100.
+    a. Is this a fair game? Simulate one hundred thousand sequential hands to determine the size of your return. Then repeat this simulation 99 more times to get a range of values to calculate the expectation.
+```{r}
+markov_func<-function(cash, bet, prob){
+  #hand counter
+  hand<-0
+  probability<-prob
+  while(bet>0){
+    roll<-runif(1)
+    if(roll<p)
+    {
+      cash<-cash+bet
+      probability<-probability+.01
+    } else{
+      cash<-cash-bet
+      #reset to initial
+      probability<-prob
+    }
+  }
+  hand<-hand+1
+  if(hand==100000){
+    break
+  }
+  if(cash<bet){
+    break
+  }
+}
+
+
+```
+    b. Repeat this process but change the starting probability to a new value within 2% either way. Get the expected return after 100 repetitions. Keep exploring until you have a return value that is as fair as you can make it. Can you do this automatically?
+    c. Repeat again, keeping the initial probability at 48%, but this time change the probability increment to a value different from 1%. Get the expected return after 100 repetitions. Keep changing this value until you have a return value that is as fair as you can make it. 
+
+
+
