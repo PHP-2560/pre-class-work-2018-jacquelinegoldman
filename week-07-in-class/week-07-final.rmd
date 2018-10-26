@@ -131,7 +131,7 @@ GR1=function(bet,bankroll,p)
       bet = bet
       }
     k=k+1
-    if(k ==100){break}
+    if(k ==100){break} #breaks at 100 hands or when insufficient bankroll
     if(bankroll<bet){break}
   }
   duration = k
@@ -152,7 +152,7 @@ var(bankroll)
 ```
     e. the mean and variance of your bankroll after 500 hands (including busts).
 ```{r}
-set.seed(1)
+set.seed(1) #same code as before, just changing to 500
 GR2=function(bet,bankroll,p)
 {
   k=0
@@ -199,7 +199,7 @@ GR=function(bet,bankroll,p)
     if(ProbVal <= p)
     {
       bankroll = bet + bankroll
-      bet = (bet + bankroll)*0.1
+      bet = (bet + bankroll)*0.1 #probability increases when the roll is less than probability
     }else{
       bankroll = bankroll-bet
       bet = bet
@@ -319,10 +319,10 @@ markov_func=function(bet,bankroll,p)
     if(ProbVal <= p)
     {
       bankroll <- bankroll +bet
-      p = p+0.01
+      p = p+0.01 #probability increases when game is won
     }else{
       bankroll <- bankroll-bet
-      p = prob
+      p = prob #probability reset when lost
     }
     hand=hand+1
     if(hand==100000){break}
@@ -406,11 +406,15 @@ The steps of this process are:
   a. Draw a sample, with replacement, from your data which is the same length of your data.
 ```{r}
   boostrapfun<-function(data, N, FUN=mean){
+      #n variable takes the length of the data
     n <-length(data)
+    #creating a matrix with columns equaling length of the data and N with the rows present in the data
   data_sample<-matrix(NA, nrow=N, ncol=n)
+  #for loop populates the matrix with a sampling from your data
   for (i in 1:N){
    data_sample[i, ]<-sample(data, n, replicate = TRUE)
   }
+  #returns an application of the function to the dataset
     return(sort(apply(data_sample,1, FUN)))
   }  
 #part B
