@@ -76,8 +76,8 @@ kable(moneytable, format="html")
 Hint: the base URL is “https://money.cnn.com”
 7. Extract the titles under the “Latest News” section (bottom middle of the web page.)
 ```{r}
-page_text<-read_html("https://money.cnn.com/data/us_markets/")
-latestnews<-html_node(page_text, "#section_latestnews ~ ul")
+page_text<-html('https://money.cnn.com/data/us_markets/')
+latestnews<-html_node(page_text, "div#Latest News ")
 latestnews
 
 ```
