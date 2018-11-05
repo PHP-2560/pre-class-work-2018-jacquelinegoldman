@@ -24,8 +24,11 @@ options(scipen = 3, digits = 3)
 ```{r}
 library(XML)
 library(RCurl)
+library(rvest)
 url<-"https://money.cnn.com/data/us_markets/"
 urldata<-getURL(url)
+page_text<-read_html(url)
+
 
   
 ```
@@ -53,6 +56,14 @@ df2<-readHTMLTable(urldata, stringAsFactor=F, which=1)
 df2
 ```
 6. Re-construct all of the links from the first column of the “What’s Moving” table.
+```{r}
+link<-df2 %>%
+  html_nodes("[td a]") %>%
+  html_attr("href")
+
+link<-paste('[Link]https://indeed.com',link, sep='')
+link<-paste(link, ')', sep='')
+```
 Hint: the base URL is “https://money.cnn.com”
 7. Extract the titles under the “Latest News” section (bottom middle of the web page.)
 8. To understand the structure of the data in a web page, it is often useful to know what the underlying attributes are of the text you see.
