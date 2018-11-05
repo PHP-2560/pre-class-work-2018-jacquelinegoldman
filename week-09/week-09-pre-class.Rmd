@@ -25,11 +25,10 @@ options(scipen = 3, digits = 3)
 library(XML)
 library(RCurl)
 library(rvest)
-url<-"https://money.cnn.com/data/us_markets/"
-urldata<-getURL(url)
-page_text<-read_html(url)
-
-
+library(httr)
+url<-GET("https://money.cnn.com/data/us_markets/")
+page<-content(url, 'text')
+cat(page)
   
 ```
 2. Get the session details (status, type, size) of the above mentioned URL.
@@ -44,6 +43,8 @@ status
 df1<-readHTMLTable(urldata, stringAsFactors= FALSE, which=2)
 sectors<-df1$`Stock Sectors`
 sectors
+
+
 ```
 4. Extract all of the “3 Month % Change” values from the “Stock Sectors” table.
 ```{r}
@@ -57,15 +58,29 @@ df2
 ```
 6. Re-construct all of the links from the first column of the “What’s Moving” table.
 ```{r}
-link<-df2 %>%
-  html_nodes("[td a]") %>%
+
+session<-html_session("https://money.cnn.com/data/us_markets/")
+
+
+link<-session %>%
+  html_node("[wsod_symbol]") %>%
   html_attr("href")
 
-link<-paste('[Link]https://indeed.com',link, sep='')
-link<-paste(link, ')', sep='')
+link<-paste('https://money.cnn.com',link, sep='')
+link<-paste(link, sep='')
+
+moneytable<-data.frame(df2, link)
+library(knitr)
+kable(moneytable, format="html")
 ```
 Hint: the base URL is “https://money.cnn.com”
 7. Extract the titles under the “Latest News” section (bottom middle of the web page.)
+```{r}
+page_text<-read_html("https://money.cnn.com/data/us_markets/")
+latestnews<-html_node(page_text, "#section_latestnews ~ ul")
+latestnews
+
+```
 8. To understand the structure of the data in a web page, it is often useful to know what the underlying attributes are of the text you see.
 Extract the attributes (and their values) of the HTML element that holds the timestamp underneath the “What’s Moving” table.
 9. Extract the values of the blue percentage-bars from the “Trending Tickers” table (bottom right of the web page.)
