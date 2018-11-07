@@ -58,6 +58,13 @@ df2
 ```
 6. Re-construct all of the links from the first column of the “What’s Moving” table.
 ```{r}
+base<-"https://money.cnn.com"
+link<-page%>%
+    html_nodes("td .wsod_symbol")%>%
+    html_attr("href")
+   
+link_together<-paste(base, link)
+link_together
 
 session<-html_session("https://money.cnn.com/data/us_markets/")
 
@@ -76,13 +83,19 @@ kable(moneytable, format="html")
 Hint: the base URL is “https://money.cnn.com”
 7. Extract the titles under the “Latest News” section (bottom middle of the web page.)
 ```{r}
-page_text<-html('https://money.cnn.com/data/us_markets/')
-latestnews<-html_node(page_text, "div#Latest News ")
-latestnews
+latest_news<-page %>%
+    html_nodes(".HeadlineList a")%>%
+    html_text()
+latest_news
+
 
 ```
 8. To understand the structure of the data in a web page, it is often useful to know what the underlying attributes are of the text you see.
 Extract the attributes (and their values) of the HTML element that holds the timestamp underneath the “What’s Moving” table.
+```{r}
+html_attr(df2)
+
+```
 9. Extract the values of the blue percentage-bars from the “Trending Tickers” table (bottom right of the web page.)
 Hint: in this case, the values are stored under the “class” attribute.
 10. Get the links of all of the “svg” images on the web page.
