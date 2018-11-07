@@ -26,9 +26,9 @@ library(XML)
 library(RCurl)
 library(rvest)
 library(httr)
-url<-GET("https://money.cnn.com/data/us_markets/")
-page<-content(url, 'text')
-cat(page)
+page<-read_html("https://money.cnn.com/data/us_markets/")
+pagecontent<-content(url, 'text')
+
   
 ```
 2. Get the session details (status, type, size) of the above mentioned URL.
@@ -66,17 +66,10 @@ link<-page%>%
 link_together<-paste(base, link)
 link_together
 
-session<-html_session("https://money.cnn.com/data/us_markets/")
 
 
-link<-session %>%
-  html_node("[wsod_symbol]") %>%
-  html_attr("href")
 
-link<-paste('https://money.cnn.com',link, sep='')
-link<-paste(link, sep='')
-
-moneytable<-data.frame(df2, link)
+moneytable<-data.frame(df2, link_together)
 library(knitr)
 kable(moneytable, format="html")
 ```
