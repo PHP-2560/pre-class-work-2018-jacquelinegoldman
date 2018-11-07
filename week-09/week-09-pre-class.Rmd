@@ -86,7 +86,8 @@ latest_news
 8. To understand the structure of the data in a web page, it is often useful to know what the underlying attributes are of the text you see.
 Extract the attributes (and their values) of the HTML element that holds the timestamp underneath the “What’s Moving” table.
 ```{r}
-html_attr(df2)
+whatmoving<-html_node(url, "#wsod_whatsMoving")
+html_text(whatmoving)
 
 ```
 9. Extract the values of the blue percentage-bars from the “Trending Tickers” table (bottom right of the web page.)
