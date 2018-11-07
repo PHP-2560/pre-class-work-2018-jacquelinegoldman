@@ -26,6 +26,7 @@ library(XML)
 library(RCurl)
 library(rvest)
 library(httr)
+library(dplyr)
 page<-read_html("https://money.cnn.com/data/us_markets/")
 pagecontent<-content(url, 'text')
 
@@ -76,7 +77,6 @@ kable(moneytable, format="html")
 Hint: the base URL is “https://money.cnn.com”
 7. Extract the titles under the “Latest News” section (bottom middle of the web page.)
 ```{r}
-library(dplyr)
 latest_news<-page %>%
     html_nodes(".HeadlineList a")%>%
     html_text()
@@ -97,10 +97,16 @@ whatmoving
 9. Extract the values of the blue percentage-bars from the “Trending Tickers” table (bottom right of the web page.)
 Hint: in this case, the values are stored under the “class” attribute.
 ```{r}
-
+bluepercent<-page %>% 
+  html_nodes(".scale div") %>% 
+  html_attr("class")
+bluepercent
 
 ```
 10. Get the links of all of the “svg” images on the web page.
 ```{r}
-
+svg<-page %>%
+  html_nodes("img[src$='svg']")%>%
+  html_attr("src")
+svg
 ```
