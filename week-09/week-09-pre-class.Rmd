@@ -22,15 +22,12 @@ options(scipen = 3, digits = 3)
 
 1. Read the HTML content of the following URL with a variable called webpage: https://money.cnn.com/data/us_markets/ At this point, it will also be useful to open this web page in your browser.
 ```{r}
-library(XML)
 library(RCurl)
 library(rvest)
 library(httr)
 library(dplyr)
 page<-read_html("https://money.cnn.com/data/us_markets/")
 pagecontent<-content(url, 'text')
-
-  
 ```
 2. Get the session details (status, type, size) of the above mentioned URL.
 ```{r}
