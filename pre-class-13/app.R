@@ -5,7 +5,11 @@ library(shiny)
 #in a standard normal distribution. 
 #In other words it takes a (z) value and gives a p-value.
 
-ui<-fluidPage()
+ui<-fluidPage(titlePanel("get the p-vlaue from a z score"),
+              sidebarLayout(
+                sidebarPanel("your zscore will go here"),
+                mainPanel("the p-value will go here")
+              ))
 
 zscore<- function(z, one.sided=NULL){
   if(is.null(one.sided)){
