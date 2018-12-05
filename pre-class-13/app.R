@@ -5,22 +5,29 @@ library(shiny)
 #in a standard normal distribution. 
 #In other words it takes a (z) value and gives a p-value. 
 
-ui<-pageWithSidebar(
-            headerPanel("P-value calculator"),
-                sidebarPanel(),
-                mainPanel()
-              )
+ui<-fluidPage(
+  titlePanel("Practice Shiny App"),
 
-zscore<- function(z, one.sided=NULL){
-  if(is.null(one.sided)){
-    pval=pnorm(-abs(z))
-    pval = 2 * pval
-  } else if (one.sided=="-"){
-    pval=pnorm(z)
-  } else {
-    pval=pnorm(-z)
-  }
-  return(pval)
+# Sidebar with a slider input
+sidebarLayout(
+  sidebarPanel(
+    numericInput(inputId="scoreInput", label="Z Score", value=0)
+  ),
+  
+  # Show a plot of the generated distribution
+  mainPanel( "P value",
+             textOutput("PVal")
+  )
+)
+)
+
+# Define server logic required to draw a histogram
+zscore<- function(input, output) {
+  
+  output$PVal<-renderText(
+    {2*pnorm(-abs(input$scoreInput))
+    })
 }
 
+# Run the application 
 shinyApp(ui = ui, server = zscore)
