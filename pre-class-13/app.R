@@ -3,7 +3,7 @@ library(shiny)
 #create a simple app that takes a standard normal statistic and 
 #displays the probability of achieving that value or greater 
 #in a standard normal distribution. 
-#In other words it takes a (z) value and gives a p-value.
+#In other words it takes a (z) value and gives a p-value. 
 
 ui<-fluidPage(titlePanel("get the p-vlaue from a z score"),
               sidebarLayout(
